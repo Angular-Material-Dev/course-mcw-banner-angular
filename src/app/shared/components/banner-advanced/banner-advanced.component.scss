@@ -1,0 +1,31 @@
+@use '@material/theme/theme-color';
+@use '@material/banner/styles';
+@use '@material/button/styles' as mdcButtonStyles;
+@use '@material/banner/banner-theme';
+
+:host.color {
+  &-accent {
+    $theme: (
+      action-focus-state-layer-color: theme-color.$accent,
+      action-hover-state-layer-color: theme-color.$accent,
+      action-label-text-color: theme-color.$accent,
+      action-pressed-state-layer-color: theme-color.$accent
+    );
+    @include banner-theme.graphic-background-color(theme-color.$accent);
+    .mdc-banner {
+      @include banner-theme.theme-styles($theme);
+    }
+  }
+  &-warn {
+    $theme: (
+      action-focus-state-layer-color: theme-color.$error,
+      action-hover-state-layer-color: theme-color.$error,
+      action-label-text-color: theme-color.$error,
+      action-pressed-state-layer-color: theme-color.$error,
+    );
+    @include banner-theme.graphic-background-color(theme-color.$error);
+    .mdc-banner {
+      @include banner-theme.theme-styles($theme);
+    }
+  }
+}

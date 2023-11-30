@@ -1,0 +1,42 @@
+<div
+  class="mdc-banner"
+  role="banner"
+  [class.mdc-banner--centered]="centered"
+  [class.mdc-banner--mobile-stacked]="mobileStacked"
+>
+  <ng-container *ngIf="fixed; else content">
+    <div class="mdc-banner__fixed">
+      <ng-container *ngTemplateOutlet="content"></ng-container>
+    </div>
+  </ng-container>
+</div>
+<ng-template #content>
+  <div class="mdc-banner__content" role="alertdialog" aria-live="assertive">
+    <div class="mdc-banner__graphic-text-wrapper">
+      <div class="mdc-banner__graphic" role="img" alt="">
+        <i class="material-icons mdc-banner__icon">error_outline</i>
+      </div>
+      <div class="mdc-banner__text">
+        {{ text }}
+      </div>
+    </div>
+    <div class="mdc-banner__actions" *ngIf="primaryAction || secondaryAction">
+      <button
+        type="button"
+        class="mdc-button mdc-banner__secondary-action"
+        *ngIf="secondaryAction"
+      >
+        <div class="mdc-button__ripple"></div>
+        <div class="mdc-button__label">{{ secondaryAction }}</div>
+      </button>
+      <button
+        type="button"
+        class="mdc-button mdc-banner__primary-action"
+        *ngIf="primaryAction"
+      >
+        <div class="mdc-button__ripple"></div>
+        <div class="mdc-button__label">{{ primaryAction }}</div>
+      </button>
+    </div>
+  </div>
+</ng-template>
