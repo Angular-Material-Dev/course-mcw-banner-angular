@@ -3,7 +3,7 @@
 @use '@material/button/styles' as mdcButtonStyles;
 @use '@material/banner/banner-theme';
 
-:host.color {
+.color {
   &-accent {
     $theme: (
       action-focus-state-layer-color: theme-color.$accent,

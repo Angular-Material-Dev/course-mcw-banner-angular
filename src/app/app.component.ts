@@ -8,7 +8,6 @@ import { BannerAdvancedComponent } from './shared/components/banner-advanced/ban
   standalone: true,
   imports: [CommonModule, BannerSimpleComponent, BannerAdvancedComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss',
 })
 export class AppComponent {
   title = 'mcw-banner-angular';

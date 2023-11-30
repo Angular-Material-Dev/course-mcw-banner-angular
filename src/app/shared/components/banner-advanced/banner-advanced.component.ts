@@ -7,8 +7,10 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   HostBinding,
-  NgZone,
-  Renderer2,
+  afterRender,
+  OnDestroy,
+  AfterRenderPhase,
+  afterNextRender,
 } from '@angular/core';
 import { CommonModule, DOCUMENT } from '@angular/common';
 import {
@@ -28,10 +30,9 @@ export const classNames = (classList: string[]) =>
   standalone: true,
   imports: [CommonModule, A11yModule],
   templateUrl: './banner-advanced.component.html',
-  styleUrl: './banner-advanced.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BannerAdvancedComponent {
+export class BannerAdvancedComponent implements OnDestroy {
   @Input() primaryAction = '';
   @Input() secondaryAction = '';
   @Input({ required: true }) text!: string;
@@ -67,6 +68,15 @@ export class BannerAdvancedComponent {
 
   constructor() {
     this.cdr.detach();
+    afterNextRender(
+      () => {
+        if (this.elementRef) {
+          this._foundation = new MDCBannerFoundation(this.adapter);
+          this._foundation.init();
+        }
+      },
+      { phase: AfterRenderPhase.Write }
+    );
   }
 
   @HostBinding('class.color-accent') get accentColor() {
@@ -128,15 +138,15 @@ export class BannerAdvancedComponent {
     };
   }
 
-  ngAfterViewInit(): void {
-    if (this.elementRef) {
-      this._foundation = new MDCBannerFoundation(this.adapter);
-      this._foundation.init();
-    }
-  }
+  // ngAfterViewInit(): void {
+  //   if (this.elementRef) {
+  //     this._foundation = new MDCBannerFoundation(this.adapter);
+  //     this._foundation.init();
+  //   }
+  // }
 
   ngOnDestroy(): void {
-    this._foundation.destroy();
+    this._foundation?.destroy();
   }
 
   open(triggerSelector?: string) {
